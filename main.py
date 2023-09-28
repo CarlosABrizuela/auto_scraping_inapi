@@ -13,6 +13,8 @@ def main():
 
     scraper.buscador_register(REGISTER_TEST)
     sleep(3)
+    scraper.lista_de_aciertos()
+    
     scraper.end_scraper()
     
 
