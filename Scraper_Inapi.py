@@ -48,7 +48,8 @@ class Scraper_Inapi(AbstractScraper):
             # print(fila.get_attribute('outerHTML'))
             fila.click()
             self.detalle_salida()
-        
+
+        self.prepara_buscador()
     
     def detalle_salida(self):
         """
@@ -102,6 +103,15 @@ class Scraper_Inapi(AbstractScraper):
         #
         print(self.data)
 
+
+    def prepara_buscador(self):
+        """
+        prepara para buscar en el primer formulario
+        """
+        self.wait_to_load(5)
+        form_buscador = self.driver.find_element(by=By.XPATH, value="//*[@id='ui-id-3']/a")
+        form_buscador.click()
+    
     def to_json(self):
         """
         Guardar los datos en un json file
@@ -122,7 +132,7 @@ class Scraper_Inapi(AbstractScraper):
 
         """
         Formato de salida:
-        
+
             [{
                 'registro': NRO_REGISTRO, 
                 'instancias': [
