@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from time import sleep
 from sys import exception
+import json
 
 class Scraper_Inapi(AbstractScraper):
     def __init__(self):
@@ -100,9 +101,6 @@ class Scraper_Inapi(AbstractScraper):
         registro["registro"] = self.actual_register
         registro["instancias"]=lista_instancias
         self.data.append(registro)
-        #
-        print(self.data)
-
 
     def prepara_buscador(self):
         """
@@ -116,7 +114,8 @@ class Scraper_Inapi(AbstractScraper):
         """
         Guardar los datos en un json file
         """
-        pass
+        with open("salida.json", 'w', encoding='utf-8') as json_file:
+            json.dump(self.data, json_file, indent=4, ensure_ascii=False)
 
     def wait_to_load(self, time):
         """
@@ -130,19 +129,19 @@ class Scraper_Inapi(AbstractScraper):
 
 
 
-        """
-        Formato de salida:
+"""
+Formato de salida:
 
-            [{
-                'registro': NRO_REGISTRO, 
-                'instancias': [
-                    {
-                        'Observada_de_fondo': True/False, 
-                        'Fecha_observada_de_fondo': Fecha, 
-                        'Apelaciones': True/False, 
-                        'IPT': True/False
-                    }, 
-                    ...
-                    ]
-            }]
-        """
+    [{
+        'registro': NRO_REGISTRO, 
+        'instancias': [
+            {
+                'Observada_de_fondo': True/False, 
+                'Fecha_observada_de_fondo': Fecha, 
+                'Apelaciones': True/False, 
+                'IPT': True/False
+            }, 
+            ...
+            ]
+    }]
+"""

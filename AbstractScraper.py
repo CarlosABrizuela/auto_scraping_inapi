@@ -32,7 +32,6 @@ class AbstractScraper(ABC):
         Returns:
             str: Los datos en formato JSON.
         """
-        pass
     
     def end_scraper(self):
         """
