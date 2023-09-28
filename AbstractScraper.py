@@ -6,7 +6,7 @@ class AbstractScraper(ABC):
         self.driver = None
 
     @abstractmethod
-    def fetch(self, url, **kwargs):
+    def fetch(self, url):
         """
         Realiza una solicitud HTTP a la URL especificada y devuelve la respuesta.
 
@@ -33,3 +33,9 @@ class AbstractScraper(ABC):
             str: Los datos en formato JSON.
         """
         pass
+    
+    def end_scraper(self):
+        """
+        finalizar
+        """
+        self.driver.quit()
