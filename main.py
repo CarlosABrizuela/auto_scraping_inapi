@@ -1,4 +1,7 @@
+from time import sleep
 from Scraper_Inapi import Scraper_Inapi
+
+from TEST_VALUES import REGISTER_TEST 
 
 def main():
     """
@@ -8,6 +11,8 @@ def main():
     scraper = Scraper_Inapi()
     scraper.fetch("/Marca/BuscarMarca.aspx")
 
+    scraper.buscador_register(REGISTER_TEST)
+    sleep(3)
     scraper.end_scraper()
     
 
