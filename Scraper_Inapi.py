@@ -3,6 +3,7 @@ from AbstractScraper import AbstractScraper
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from time import sleep
 from sys import exception
 import json
@@ -27,25 +28,39 @@ class Scraper_Inapi(AbstractScraper):
         """
         Ingresa un nuevo numero de registro para la busqueda
         """
+        try:
+            input_register = self.driver.find_element(by=By.ID, value="txtRegistro")
+            submit_button = self.driver.find_element(by=By.ID, value="btnBuscarMarca")
+        except NoSuchElementException as e:
+            print(f"Elemento no encontrado. ({e.msg})")
+            return
+        
         self.actual_register = register_number
-        input_register = self.driver.find_element(by=By.ID, value="txtRegistro")
         input_register.clear()
-        # print(self.actual_register)
         input_register.send_keys(self.actual_register)
         sleep(1)
         
-        self.wait_to_load(20)
-        submit_button = self.driver.find_element(by=By.ID, value="btnBuscarMarca")
+        self.wait_to_load(5)
         submit_button.click()
+        try:
+            return self.existe_registro()
+        except Exception as e:
+            print(f"Ocurrió un erro con el popup: {e}")
+            return False
+                
     
     def lista_de_aciertos(self):
         """
         Selecciona los registros de la tabla, si existiesen
         """
-        # self.wait_to_load(5)
-        tablaresult = self.driver.find_element(by=By.ID, value="tblMarcasResult")
-        tbodyresult = tablaresult.find_element(by=By.TAG_NAME, value='tbody')
-        trresult = tbodyresult.find_elements(by=By.TAG_NAME, value='tr')
+        try:
+            tablaresult = self.driver.find_element(by=By.ID, value="tblMarcasResult")
+            tbodyresult = tablaresult.find_element(by=By.TAG_NAME, value='tbody')
+            trresult = tbodyresult.find_elements(by=By.TAG_NAME, value='tr')
+        except NoSuchElementException as e:
+            print(f"Elemento no encontrado. ({e.msg})")
+            return
+        
         for fila in trresult:
             # print(fila.get_attribute('outerHTML'))
             fila.click()
@@ -57,10 +72,14 @@ class Scraper_Inapi(AbstractScraper):
         """
         obtener los datos del detalle y generar la salida
         """
-        sleep(3)
-        datosadministrativos = self.driver.find_element(by=By.ID, value="tblInstancias")
-        tbody_administrativos = datosadministrativos.find_element(by=By.TAG_NAME, value='tbody')
-        tr_instancia = tbody_administrativos.find_elements(by=By.TAG_NAME, value='tr')
+        sleep(2)
+        try:
+            datosadministrativos = self.driver.find_element(by=By.ID, value="tblInstancias")
+            tbody_administrativos = datosadministrativos.find_element(by=By.TAG_NAME, value='tbody')
+            tr_instancia = tbody_administrativos.find_elements(by=By.TAG_NAME, value='tr')
+        except NoSuchElementException as e:
+            print(f"Elemento no encontrado. ({e.msg})")
+            return
         lista_instancias = []
         for fila in tr_instancia:
             instancia = {}
@@ -71,7 +90,12 @@ class Scraper_Inapi(AbstractScraper):
             col = 0
             celdasinstancias = fila.find_elements(by=By.TAG_NAME, value='td')
             for celda in celdasinstancias:
-                valor_celda = celda.get_attribute('innerHTML')
+                try:
+                    valor_celda = celda.get_attribute('innerHTML')
+                except NoSuchElementException as e:
+                    print(f"Elemento no encontrado. ({e.msg})")
+                    return
+                
                 if col ==0:
                     fechainstancia = valor_celda
                 if col ==1:
@@ -107,8 +131,11 @@ class Scraper_Inapi(AbstractScraper):
         """
         prepara para buscar en el primer formulario
         """
-        self.wait_to_load(5)
-        form_buscador = self.driver.find_element(by=By.XPATH, value="//*[@id='ui-id-3']/a")
+        try:
+            form_buscador = self.driver.find_element(by=By.XPATH, value="//*[@id='ui-id-3']/a")
+        except NoSuchElementException as e:
+            print(f"Elemento no encontrado. ({e.msg})")
+            return
         form_buscador.click()
     
     def to_json(self):
@@ -125,8 +152,28 @@ class Scraper_Inapi(AbstractScraper):
         try:
             WebDriverWait(self.driver, time).until(EC.invisibility_of_element_located((By.ID, "loadingBackground")))
 
-        except exception:
-            print(exception) 
+        except TimeoutException as e:
+            print(f"No se puede cargar el contenido: {e.msg}") 
+            self.wait_to_load(time)
+    
+    def existe_registro(self):
+        """
+        checkea si se ha encontrado resultado para el numero de registro.
+        """
+        sleep(3)
+        popup = self.driver.find_element(By.XPATH, value = "/html/body/div[7]")
+
+        if not popup.is_displayed():
+            return True
+        else:
+            print(f"{self.actual_register} No tuvo resultados")
+            wait = WebDriverWait(self.driver, 10)
+            popup = wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[7]")))
+            popup.find_element(By.XPATH, "//button[contains(text(), 'Ok')]").click()
+            # elemento_boton = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[7]/div[3]/div/button")))
+            # elemento_boton.click()
+            sleep(1)
+            return False
 
 
 

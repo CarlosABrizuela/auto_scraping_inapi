@@ -16,9 +16,9 @@ def main():
     scraper.fetch(config["relative_url"])
     for registro in lista_registros:
         print(f"Registro: {registro}")
-        scraper.buscador_register(registro) 
-        sleep(3)
-        scraper.lista_de_aciertos()
+        if scraper.buscador_register(registro):
+            sleep(3)
+            scraper.lista_de_aciertos()
     
     scraper.to_json()
     scraper.end_scraper()
