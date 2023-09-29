@@ -2,7 +2,7 @@ base_url: https://ion.inapi.cl
 relative_url: /Marca/BuscarMarca.aspx
 output_file_name: salida
 output_dir: C:/Users/LNKIZ/Desktop/Test python/proyecto/auto_scraping_inapi/files/
-proxy: false
+proxy_ip_port:
 project_dir: C:/Users/LNKIZ/Desktop/Test python/proyecto/auto_scraping_inapi/
 registers_list_file_name: register_number_list.txt
 file_folder_name: files

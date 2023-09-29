@@ -32,4 +32,9 @@ def get_config():
         config["output"] = "salida.json"
         config["base_url"] = "https://ion.inapi.cl"
         config["relative_url"] = "/Marca/BuscarMarca.aspx"
+        config["proxy_ip_port"] = None
         return config
+
+"""
+ejemplo de proxy_ip_port:  37.19.220.129:8443
+"""

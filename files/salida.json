@@ -1,74 +1,7 @@
 [
     {
         "registro": "1236223",
-        "instancias": [
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": true,
-                "Fecha_observada_de_fondo": "12/12/2016",
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            },
-            {
-                "Observada_de_fondo": false,
-                "Fecha_observada_de_fondo": null,
-                "Apelaciones": false,
-                "IPT": false
-            }
-        ]
+        "instancias": []
     },
     {
         "registro": "1236224",

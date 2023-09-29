@@ -14,6 +14,7 @@ def main():
 
     scraper = Scraper_Inapi(config)
     scraper.fetch(config["relative_url"])
+    
     for registro in lista_registros:
         print(f"Registro: {registro}")
         if scraper.buscador_register(registro):

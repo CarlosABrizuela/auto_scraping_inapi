@@ -1,3 +1,4 @@
+from numpy import full
 from selenium import webdriver
 from AbstractScraper import AbstractScraper
 from selenium.webdriver.common.by import By
@@ -5,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from time import sleep
-from sys import exception
+from selenium.webdriver.common.proxy import Proxy, ProxyType
 import json
 
 class Scraper_Inapi(AbstractScraper):
@@ -17,12 +18,31 @@ class Scraper_Inapi(AbstractScraper):
         super().__init__(self.config["base_url"])
         self.data = []
         self.actual_register = None
+    
+    def initialize_driver(self):
+        chrome_options = webdriver.ChromeOptions()
+
+        proxy_ip_port = self.config['proxy_ip_port']
+        if proxy_ip_port:
+            proxy = Proxy()
+            proxy.proxy_type = ProxyType.MANUAL
+            proxy.http_proxy = proxy_ip_port
+            proxy.ssl_proxy = proxy_ip_port
+            chrome_options.add_argument(f"--proxy-server={proxy_ip_port}")
+
+        self.driver = webdriver.Chrome(options=chrome_options)
 
     def fetch(self, url):
-        self.driver = webdriver.Chrome()
-        self.driver.maximize_window() #
+        if not self.driver:
+            self.initialize_driver()
+        
+        self.driver.get(self.get_full_url(url))
+    
+    def get_full_url(self, url):
+        # self.driver = webdriver.Chrome()
+        # self.driver.maximize_window() #
         full_url = self.base_url+url
-        self.driver.get(full_url)
+        return full_url
 
     def buscador_register(self, register_number):
         """
