@@ -1,4 +1,3 @@
-from numpy import full
 from selenium import webdriver
 from AbstractScraper import AbstractScraper
 from selenium.webdriver.common.by import By
