@@ -8,11 +8,12 @@ from sys import exception
 import json
 
 class Scraper_Inapi(AbstractScraper):
-    def __init__(self):
+    def __init__(self, config):
         """
-        cargar las configuraciones
+        cargar las configuraciones, declaracion de las propiedades
         """
-        super().__init__("https://ion.inapi.cl")
+        self.config = config
+        super().__init__(self.config["base_url"])
         self.data = []
         self.actual_register = None
 
@@ -114,7 +115,7 @@ class Scraper_Inapi(AbstractScraper):
         """
         Guardar los datos en un json file
         """
-        with open("salida.json", 'w', encoding='utf-8') as json_file:
+        with open(self.config["output"], 'w', encoding='utf-8') as json_file:
             json.dump(self.data, json_file, indent=4, ensure_ascii=False)
 
     def wait_to_load(self, time):
