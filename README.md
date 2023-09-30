@@ -33,7 +33,7 @@ Si deseas crear un entorno virtual para este proyecto, puedes seguir estos pasos
 - pip install -r requirements.txt
 
 ## Uso del scraper
-- python scraper.py
+- python main.py
 
 ## Licencia
 - Sin Licencia
