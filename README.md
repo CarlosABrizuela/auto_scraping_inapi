@@ -16,13 +16,13 @@ Si deseas crear un entorno virtual para este proyecto, puedes seguir estos pasos
    pip install virtualenv
 
 2. crear virtual environment
-    virtualenv venv
+- virtualenv venv
 
 3. Activa el entorno en Windows
-    venv\Scripts\activate
+- venv\Scripts\activate
 
 4. en linux y mac
-    source venv/bin/activate
+- source venv/bin/activate
 
 
 ## Clona el proyecto
